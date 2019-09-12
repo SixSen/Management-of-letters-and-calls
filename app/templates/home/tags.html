@@ -1,0 +1,34 @@
+<div class="modal" id="tag">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    请选择标签
+                </div>
+                <div class="modal-body">
+
+
+                    <form role="form" method="post">
+                        <fieldset>
+
+                            <div class="col-md-12" id="error_contact"></div>
+                            <div class="form-group">
+                                {{ form.checkbox }}
+                                &nbsp;{{ form.checkbox.label }}
+                            </div>
+
+                            {% for err in form.errors %}
+                                <div class="col-md-12">
+                                    <p style="color: red">{{ err }}</p>
+                                </div>
+                            {% endfor %}
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    {{ form.csrf_token }}
+                    {{ form.submit }}
+                </div>
+            </div>
+        </div>
+    </div>

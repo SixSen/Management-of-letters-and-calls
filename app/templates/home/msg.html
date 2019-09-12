@@ -1,0 +1,106 @@
+{% extends "home/home.html" %}
+
+{% block username %}
+    {{ name }}
+{% endblock %}
+{% block content %}
+    <div class="app">
+        {% for msg in get_flashed_messages(category_filter=["acc"]) %}
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                </button>
+                <h4><i class="icon fa fa-check"></i> 操作成功</h4>
+                {{ msg }}
+            </div>
+        {% endfor %}
+        {% for msg in get_flashed_messages(category_filter=["err"]) %}
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                </button>
+                <h4><i class="icon fa fa-check"></i> 操作失败</h4>
+                {{ msg }}
+            </div>
+        {% endfor %}
+    </div>
+    <div>
+        <h1>信件内容</h1>
+
+        <h4> 举报地点：{{ id.accuseArea }}</h4>
+        <hr>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ id.contect }}
+    </div>
+
+
+    <br>
+
+    <a href="javascript:history.go(-1);" class="btn btn-primary"
+       role="button"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;返回</a>
+
+
+    <a data-toggle="modal" data-target="#tag" href="" class="btn btn-primary"
+       role="button"><span class="glyphicon glyphicon-star-empty"></span>&nbsp;更改标签</a>
+
+    <div class="modal" id="tag">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    请选择标签
+                </div>
+
+                <form class="form-horizontal" method="post">
+                    <script type="text/javascript" src="js/jquery.min.js"></script>
+                    <script type="text/javascript">
+                        $(function () {
+                            window.onload = function () {
+                                var checkeds = $("#meidaHidden").val();
+                                var checkArray = checkeds.split(",");
+                                var checkBoxAll = $("input[name='media']");
+                                for (var i = 0; i < checkArray.length; i++) {
+                                    $.each(checkBoxAll, function (j, checkbox) {
+                                        var checkValue = $(checkbox).val();
+                                        if (checkArray[i] == checkValue) {
+                                            $(checkbox).prop("checked", true);
+                                        }
+                                    })
+                                }
+
+                            };
+                        });
+                    </script>
+                    <div style="margin-left: 45px">
+                        <br>
+                        <input type="checkbox" name="media" value="1"/>不正当性关系<br>
+                        <input type="checkbox" name="media" value="2"/>贪污贿赂行为<br>
+                        <input type="checkbox" name="media" value="3"/>侵害群众利益<br>
+                        <input type="checkbox" name="media" value="4"/>挪用公款<br>
+                        <input type="checkbox" name="media" value="5"/>其他违法犯罪行为<br>
+                        <input type="checkbox" name="media" value="6"/>违反工作纪律<br>
+                        <input type="checkbox" name="media" value="7"/>违规参与公款宴请消费<br>
+                        <input type="checkbox" name="media" value="8"/>违规配备使用公务用车<br>
+                        <input type="checkbox" name="media" value="9"/>违法考试录取工作规定<br>
+                        <input type="checkbox" name="media" value="10"/>违反干部选拔任用规定<br>
+                        <input type="checkbox" name="media" value="11"/>权权交易和以权谋私<br>
+                        <input type="checkbox" name="media" value="12"/>损害党和政府的形象<br>
+                        <input type="checkbox" name="media" value="13"/>违反廉洁纪律<br>
+                        <input type="checkbox" name="media" value="14"/>违规操办婚丧喜庆事宜<br>
+                        <input type="checkbox" name="media" value="15"/>违规从事营利活动<br>
+                        <input type="checkbox" name="media" value="16"/>违规接受礼品礼金宴请服务<br>
+                        <input type="checkbox" name="media" value="17"/>违规发放津贴奖金<br>
+                        <input type="checkbox" name="media" value="18"/>在投票和选举中搞非组织活动<br>
+                        <br><br>
+                        <input type="hidden" value={{ number }} id="meidaHidden">
+                        <input type="submit" value="修改">
+                        <br><br>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
