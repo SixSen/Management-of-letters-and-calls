@@ -97,17 +97,7 @@
     })
 
 </script>
-<script>
-    $(document).ready(function () {
-        $("img.lazy").lazyload({
-            effect: "fadeIn"
-        });
-        $("#do_search").click(function () {
-            var key = $("#key_music").val();
-            location.href = "{{ url_for('home.play')}}
-        });
-    });
-</script>
+
 {% block js %}
 
 {% endblock %}

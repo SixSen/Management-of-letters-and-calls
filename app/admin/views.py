@@ -106,6 +106,7 @@ def upuser():
     db.session.add(user)
     db.session.commit()
     flash("已经成功升级id为%d的用户为高级账户" % uid, "ok")
+    flash("已经成功升级id为%d的用户为高级账户" % uid, "ok")
     return redirect(url_for('admin.all'))
 
 

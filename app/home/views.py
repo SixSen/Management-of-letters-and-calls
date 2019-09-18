@@ -212,7 +212,7 @@ def search():
     )
     page_data.key = key
 
-    return render_template("home/search.html", name=session.get('user'), key=key, count=count, page_data=page_data, form=form)
+    return render_template("home/search.html", name=session.get('user'), key=key, count=count, page_data=page_data, form= form)
 
 
 # 上传Excel文档
