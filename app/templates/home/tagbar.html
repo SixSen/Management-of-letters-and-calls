@@ -1,0 +1,84 @@
+{% extends "home/home.html" %}
+
+{% block username %}
+    {{ name }}
+{% endblock %}
+
+{% block content %}
+    <h2>问题类型</h2>
+    <style>
+
+        #taglist li {
+            display: inline-block;
+        }
+    </style>
+    <ul id="taglist" class="nav nav-tabs" style="display: inline-block;">
+        <li><a href="{{ url_for('home.tag',key=1) }}">不正当性关系</a></li>
+        <li><a href="{{ url_for('home.tag',key=2) }}">贪污贿赂行为</a></li>
+        <li><a href="{{ url_for('home.tag',key=3) }}">侵害群众利益</a></li>
+        <li><a href="{{ url_for('home.tag',key=4) }}">挪用公款</a></li>
+        <li><a href="{{ url_for('home.tag',key=5) }}">其他违法犯罪行为</a></li>
+        <li><a href="{{ url_for('home.tag',key=6) }}">违反工作纪律</a></li>
+        <li><a href="{{ url_for('home.tag',key=7) }}">违规参与公款宴请消费</a></li>
+        <li><a href="{{ url_for('home.tag',key=8) }}">违规配备使用公务用车</a></li>
+        <li><a href="{{ url_for('home.tag',key=9) }}">违法考试录取工作规定</a></li>
+        <li><a href="{{ url_for('home.tag',key=10) }}">违反干部选拔任用规定</a></li>
+        <li><a href="{{ url_for('home.tag',key=11) }}">权权交易和以权谋私</a></li>
+        <li><a href="{{ url_for('home.tag',key=12) }}">损害党和政府的形象</a></li>
+        <li><a href="{{ url_for('home.tag',key=13) }}">违反廉洁纪律</a></li>
+        <li><a href="{{ url_for('home.tag',key=14) }}">违规操办婚丧喜庆事宜</a></li>
+        <li><a href="{{ url_for('home.tag',key=15) }}">违规从事营利活动</a></li>
+        <li><a href="{{ url_for('home.tag',key=16) }}">违规接受礼品礼金宴请服务</a></li>
+        <li><a href="{{ url_for('home.tag',key=17) }}">违规发放津贴奖金</a></li>
+        <li><a href="{{ url_for('home.tag',key=18) }}">在投票和选举中搞非组织活动</a></li>
+        <br>
+        <input type="hidden" value={{ key }} id="tagbar">
+    </ul>
+    <br>
+    <h4>结果共有{{ count }}条</h4>
+    {#                    {% for msg in get_flashed_messages(category_filter=["err"]) %}#}
+    {#                        <div class="alert alert-success alert-dismissible">#}
+    {#                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×#}
+    {#                            </button>#}
+    {#                            <h4><i class="icon fa fa-check"></i> 操作失败</h4>#}
+    {#                            {{ msg }}#}
+    {#                        </div>#}
+    {#                    {% endfor %}#}
+
+
+    <div class="col-md-12">
+        <div class="row wow fadeIn" data-wow-delay="0.2s">
+            {% for v in page_data %}
+                <div class="media">
+                    <div class="media-left" style="width: 5000px;margin-right: 400px">
+                        {#                    <a href="{{ url_for('home.play',id=v.music_id) }}">#}
+                        <h4>{{ v.accuseArea }}</h4>
+                        {#                    </a>#}
+                    </div>
+                    <div class="media-body" style="margin-left: auto">
+                        <h5 class="media-heading">上传时间： {{ v.date }}<a href="{{ url_for('home.msg',id=v.letter_id) }}"
+                                                                       class="label label-primary pull-right"><span
+                                class="glyphicon glyphicon-paperclip"></span>&nbsp;查看原文</a></h5>
+                        <h5 class="media-heading">收信地址：{{ v.accuseArea }}<a
+                                href="{{ url_for('home.msg',id=v.letter_id) }}"
+                                class="label label-primary pull-right"><span
+                                class="glyphicon glyphicon-star"></span>&nbsp;更改标签</a></h5>
+                        <h5 class="media-heading">信件标签：{{ v.get_tag() }}</h5>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            window.onload = function () {
+                let list = document.querySelector("#taglist");
+                list.children[{{ key }}-1].classList.add('active');
+            };
+        });
+    </script>
+{% endblock %}

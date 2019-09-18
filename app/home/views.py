@@ -18,148 +18,24 @@ from . import home
 views是主要的路由文件
 '''
 
-
-# pymysql的数据库连接
-# conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='1232123', db='musicdb')
-
 # @ home = Blueprint("home",__name__)
-
-username = ""
 
 # 根路由
 @home.route("/")
 def index():
     page_data = []
-    # board = Board.query.filter(
-    # ).order_by(
-    #     Board.board_id
-    # )
-    # for v in board:
-    #     data = Music.query.filter(
-    #         Music.music_id == v.music_id
-    #     ).limit(1)
-    #     page_data += data
+
     return render_template("home/index.html", page_data=page_data)
 
 
 # 欢迎主页
 @home.route("/welcome/")
 def welcome():
-    if "user" not in session:
-        return abort(404)
-    
-    # board = Board.query.filter(
-    # ).order_by(
-    #     Board.board_id
-    # )
-    # for v in board:
-    #     data = Music.query.filter(
-    #         Music.music_id == v.music_id
-    #     ).limit(1)
-    #     page_data += data
-
+    # if "user" not in session:
+    #     return abort(404)
+    name = session.get('user')
+    print(session.get('user'))
     return render_template("home/welcome.html", name=session.get('user'))
-
-
-# 音乐库
-@home.route("/fav/")
-def fav():
-    if "user" not in session:
-        return abort(404)
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='1232123', db='musicdb')
-
-    cursor = conn.cursor()
-    sql = "SELECT music_id FROM library WHERE id = '%s' " % session.get("user_id")
-    cursor.execute(sql)
-    results = cursor.fetchall()
-    musicd = []
-    for rol in results:
-        musicd.append(rol[0])
-    page_data = []
-    for fid in musicd:
-        data = Music.query.filter(
-            Music.music_id == fid
-        )
-        # print(fid)
-        page_data += data
-    # print(page_data)
-    page_data.reverse()
-    return render_template("home/fav.html", name=session.get('user'), page_data=page_data)
-
-
-@home.route("/mybuy/")
-def mybuy():
-    if "user" not in session:
-        return abort(404)
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='1232123', db='musicdb')
-
-    cursor = conn.cursor()
-    sql = "SELECT music_id FROM buy WHERE id = '%s' " % session.get("user_id")
-    cursor.execute(sql)
-    results = cursor.fetchall()
-    musicd = []
-    for rol in results:
-        musicd.append(rol[0])
-    page_data = []
-    for bid in musicd:
-        data = Music.query.filter(
-            Music.music_id == bid
-        )
-        # print(bid)
-        page_data += data
-    # print(page_data)
-    page_data.reverse()
-    return render_template("home/mybuy.html", name=session.get('user'), page_data=page_data)
-
-
-@home.route("/pop/")
-def pop():
-    page_data = Music.query.filter(
-        Music.style == 'Pop'
-    ).order_by(
-        Music.listen.desc()
-    ).limit(10)
-    return render_template("home/pop.html", name=session.get('user'), page_data=page_data)
-
-
-@home.route("/jazz/")
-def jazz():
-    page_data = Music.query.filter(
-        Music.style == 'Jazz'
-    ).order_by(
-        Music.listen.desc()
-    ).limit(10)
-    return render_template("home/jazz.html", name=session.get('user'), page_data=page_data)
-
-
-@home.route("/rb/")
-def rb():
-    page_data = Music.query.filter(
-        Music.style == 'R&B'
-    ).order_by(
-        Music.listen.desc()
-    ).limit(10)
-    return render_template("home/rb.html", name=session.get('user'), page_data=page_data)
-
-
-@home.route("/cla/")
-def cla():
-    page_data = Music.query.filter(
-        Music.style == 'classical'
-    ).order_by(
-        Music.listen.desc()
-    ).limit(10)
-    return render_template("home/cla.html", name=session.get('user'), page_data=page_data)
-
-
-@home.route("/folk/")
-def folk():
-    page_data = Music.query.filter(
-        Music.style == 'Folk'
-    ).order_by(
-        Music.listen.desc()
-    ).limit(10)
-    return render_template("home/folk.html", name=session.get('user'), page_data=page_data)
 
 
 # 登录
@@ -189,7 +65,7 @@ def login():
         session["user_id"] = user.id
         session["vclass"] = vclass
         username = user.name
-
+        session.permanent = True
         return redirect(url_for("home.welcome"))
     return render_template("home/login.html", form=form)
 
@@ -226,7 +102,6 @@ def user():
         if data["name"] != user.name and name_count == 1:
             flash("昵称已经存在！", "err")
             return redirect(url_for("home.user"))
-
         email_count = User.query.filter_by(email=data["email"]).count()
         if data["email"] != user.email and email_count == 1:
             flash("邮箱已经存在！", "err")
@@ -236,7 +111,6 @@ def user():
         if data["phone"] != user.phone and phone_count == 1:
             flash("手机号码已经存在！", "err")
             return redirect(url_for("home.user"))
-
         user.name = data["name"]
         user.email = data["email"]
         user.phone = data["phone"]
@@ -291,75 +165,9 @@ def sub():
 # 管理中心——生成报告
 @home.route("/getsub/")
 def getsub():
+    if "user" not in session:
+        return abort(404)
     return "正在生成报告"
-
-
-
-# 播放音乐
-@home.route("/play/")
-def play():
-    isbuy = 0
-
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='1232123', db='musicdb')
-    cursor = conn.cursor()
-    musicid = int(request.args.get('id'))
-    sql = "SELECT free FROM music WHERE music_id = '%s' " % musicid
-    cursor.execute(sql)
-    results0 = cursor.fetchall()
-    for k in results0:
-        if 1 == k[0]:
-            isbuy = 1
-
-    # conn = pymysql.connect(host='39.106.214.230', port=3306, user='root', passwd='nucoj', db='musicdb')
-    if session.get('user') is None:
-        if isbuy == 1:
-            music = Music.query.filter(
-                Music.music_id == musicid
-            ).first()
-            return render_template("home/play.html", mus=music)
-        flash("请先登录才继续接下来的操作", "err")
-        return redirect(url_for('home.login'))
-
-    vclass = session.get('vclass')
-
-    if vclass == 0:
-        id = session.get('user_id')
-        sql = "SELECT music_id FROM buy WHERE id = '%s' " % id
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        for rol in results:
-            if musicid == rol[0]:
-                isbuy = 1
-        if isbuy == 1:
-            music = Music.query.filter(
-                Music.music_id == musicid
-            ).first()
-            add = music.address
-            pla = music.listen
-            # print(pla)
-            pla = pla + 1
-            music.listen = pla
-            # print(music.listen)
-            db.session.add(music)
-            db.session.commit()
-            return render_template("home/play.html", name=session.get('user'), user=session.get('user_id'), mus=music)
-        else:
-            flash('请先购买此歌曲或订阅会员-err:%d' % musicid)
-            return render_template("home/msg.html", name=session.get('user'))
-    else:
-        music = Music.query.filter(
-            Music.music_id == musicid
-        ).first()
-        add = music.address
-        pla = music.listen
-        # print(pla)
-        pla = pla + 1
-        music.listen = pla
-        # print(music.listen)
-        db.session.add(music)
-        db.session.commit()
-        return render_template("home/play.html", name=session.get('user'), user=session.get('user_id'), mus=music)
-
 
 
 # 注册
@@ -378,54 +186,6 @@ def register():
         db.session.commit()
         flash("注册成功！", "ok")
     return render_template("home/register.html", form=form)
-
-
-
-
-#
-# # 购买
-# @home.route("/buy")
-# def buy():
-#     conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='1232123', db='musicdb')
-#     musicd = int(request.args.get('id'))
-#     user_id = session.get('user_id')
-#     cursor = conn.cursor()
-#     sql = "SELECT music_id FROM buy WHERE id = '%s' " % user_id
-#     cursor.execute(sql)
-#     results = cursor.fetchall()
-#     sql = "SELECT free FROM music WHERE music_id = '%s' " % musicd
-#     cursor.execute(sql)
-#     results0 = cursor.fetchall()
-#     for k in results0:
-#         if 1 == k[0]:
-#             flash("此歌曲为免费歌曲，无需购买")
-#             return render_template("home/msg.html", name=session.get('user'))
-#     if int(session.get("vclass")) == 1:
-#         flash("您现在为会员，无需单独购买歌曲")
-#         return render_template("home/msg.html", name=session.get('user'))
-#     for rol in results:
-#         if musicd == rol[0]:
-#             flash("您已经购买过此歌曲，请勿重复购买！")
-#             return render_template("home/msg.html", name=session.get('user'))
-#     result = User.query.filter(User.id == session.get('user_id')).first()
-#     uss = result.wallet
-#     uss = uss - 2
-#     # print(uss)
-#     if uss < 0:
-#         flash("账户余额不足，请充值后再试")
-#     else:
-#         sql = "UPDATE user SET wallet = '%s' WHERE id = '%s' " % (uss, user_id)
-#         cursor.execute(sql)
-#         conn.commit()
-#         wallet = uss
-#         buy = Buy(
-#             id=session.get('user_id'),
-#             music_id=musicd
-#         )
-#         db.session.add(buy)
-#         db.session.commit()
-#         flash("购买成功，账户扣除2元，当前余额%d元" % wallet)
-#     return render_template("home/msg.html", name=session.get('user'))
 
 
 # 搜索
@@ -451,6 +211,7 @@ def search():
         Letter.date.desc()
     )
     page_data.key = key
+
     return render_template("home/search.html", name=session.get('user'), key=key, count=count, page_data=page_data, form=form)
 
 
@@ -468,10 +229,8 @@ def upload_e():
         for sheet in table:
             sheet2 = workbook.sheet_by_name(sheet)
             for row in range(1, sheet2.nrows):
-                # rows = sheet2.row_values(2)  # 获取第行内容
-                accuse = sheet2.col_values(1)[row]  # 获取第列内容
-                line = sheet2.col_values(2)[row]  # 获取第列内容
-                # print(sheet2.nrows)
+                accuse = sheet2.col_values(1)[row]  # 获取第 列内容
+                line = sheet2.col_values(2)[row]  # 获取第 列内容
                 letter = Letter(
                     accuseArea=accuse,
                     contect=line
@@ -524,13 +283,9 @@ def upload_p():
         )
         db.session.add(letter)
         db.session.commit()
-
         # seg_list = jieba.cut(line, cut_all=True)
-
         # print("分词结果: " + "  ".join(seg_list))  # 全模式
-
         flash("信访文档照片上传成功", "acc")
-        # session["user"] = username
         return redirect(url_for("home.welcome"))
     flash("信访文档照片上传失败", "err")
     return redirect(url_for("home.welcome"))
@@ -557,24 +312,35 @@ def msg():
         for tag in tags:
             letter_tag = LetterTag(
                 letter=key,
-                lable_id=tag
+                label_id=tag
             )
             db.session.add(letter_tag)
             db.session.commit()
         flash("标签修改成功", "acc")
         return redirect(url_for('home.msg', id=key))
+
     form = TagForm()
     key = request.args.get('id')
     tag = LetterTag.query.filter(LetterTag.letter == key)
     number = []
     for i in tag:
-        number.append(i.lable_id)
-    print(number)
+        number.append(i.label_id)
     number = ",".join('%s' % ed for ed in number)
     letter = Letter.query.filter_by(letter_id=key).first()
     return render_template("home/msg.html", name=session.get('user'), id=letter, form=form, number=number)
 
+
 @home.route('/tag', methods=['GET', 'POST'])
 def tag():
-    flash("标签修改成功", "acc")
-    return redirect(url_for('home.msg', id=key))
+    if "user" not in session:
+        return abort(404)
+    key = request.args.get('key')
+    count = LetterTag.query.filter(LetterTag.label_id==key).count()
+    page_data=[]
+    letterTag = LetterTag.query.filter(LetterTag.label_id==key)
+    qq=[]
+    for t in letterTag:
+        qq.append(t.letter)
+    for i in qq:
+        page_data += Letter.query.filter(Letter.letter_id == i)
+    return render_template("home/tagbar.html", name=session.get('user'),page_data=page_data,count=count,key=key)

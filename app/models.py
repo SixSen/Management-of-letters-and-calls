@@ -59,7 +59,7 @@ class Letter(db.Model):
         tag = LetterTag.query.filter(LetterTag.letter == self.letter_id)
         number = []
         for i in tag:
-            number.append(i.lable_id)
+            number.append(i.label_id)
         pattern = {
             1: '不正当性关系',
             2: '贪污贿赂行为',
@@ -85,12 +85,23 @@ class Letter(db.Model):
         return tags
 
 
+    def get_letter(self):
+        tags = LetterTag.query.filter(LetterTag.label_id == 18)
+        letters=[]
+        for l in tags:
+            letters.append(l.letter)
+        print(letters)
+        # letters = Letter.query.filter(Letter.letter_id == tags.letter)
+        return letters
+
+
 class LetterTag(db.Model):
     __tablename__ = 'tag'
     tag_id = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)  # tag主键
     letter = db.Column(db.Integer, nullable=False)  # 信访信编号
-    lable_id = db.Column(db.Integer, nullable=False)  # 标签编号
+    label_id = db.Column(db.Integer, nullable=False)  # 标签编号
     basis = db.Column(db.Text, nullable=True)  # 信件内容
+
 
 
 class Admin(db.Model):

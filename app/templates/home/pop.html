@@ -21,24 +21,19 @@
                 <div class="media">
                     <div class="media-left" style="width: 5000px;margin-right: 400px">
                         {#                    <a href="{{ url_for('home.play',id=v.music_id) }}">#}
-                        <h4>{{ loop.index }}-{{ v.music_name }}</h4>
+                        <h4>{{ v.accuseArea }}</h4>
                         {#                    </a>#}
                     </div>
                     <div class="media-body" style="margin-left: auto">
-                        <h5 class="media-heading">{{ v.author }}<a href="{{ url_for('home.play',id=v.music_id) }}"
-                                                                   class="label label-primary pull-right"><span
-                                class="glyphicon glyphicon-play"></span>&nbsp;播放音乐</a></h5>
-                        <h5 class="media-heading">播放次数：{{ v.listen }}<a href="{{ url_for('home.like',id=v.music_id) }}"
-                                                                        class="label label-primary pull-right"><span
-                                class="glyphicon glyphicon-star"></span>&nbsp;收藏音乐</a></h5>
-                        <h5 class="media-heading">歌曲风格：{{ v.style }}
-                            {% if v.free == 0 %}
-                                <a href="{{ url_for('home.buy',id=v.music_id) }}"
-                                   class="label label-primary pull-right"><span
-                                        class="glyphicon glyphicon-shopping-cart"></span>&nbsp;购买音乐</a>
+                        <h5 class="media-heading">上传时间： {{ v.date }}<a href="{{ url_for('home.msg',id=v.letter_id) }}"
+                                                                       class="label label-primary pull-right"><span
+                                class="glyphicon glyphicon-paperclip"></span>&nbsp;查看原文</a></h5>
+                        <h5 class="media-heading">收信地址：{{ v.accuseArea }}<a
+                                href="{{ url_for('home.msg',id=v.letter_id)}}"
+                                class="label label-primary pull-right"><span
+                                class="glyphicon glyphicon-star"></span>&nbsp;更改标签</a></h5>
+                        <h5 class="media-heading">信件标签：{{ v.get_tag() }}</h5>
 
-                            {% endif %}
-                        </h5>
                     </div>
                 </div>
             {% endfor %}

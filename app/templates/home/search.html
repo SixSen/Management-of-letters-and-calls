@@ -92,12 +92,7 @@
                                 href="{{ url_for('home.msg',id=v.letter_id)}}"
                                 class="label label-primary pull-right"><span
                                 class="glyphicon glyphicon-star"></span>&nbsp;更改标签</a></h5>
-                        <h5 class="media-heading">信件标签：{{ v.get_tag() }}
-                            {% if v.free == 0 %}
-                                <a href="{{ url_for('home.buy',id=v.music_id) }}"
-                                   class="label label-primary pull-right"><span
-                                        class="glyphicon glyphicon-shopping-cart"></span>&nbsp;受理信访</a></h5>
-                            {% endif %}
+                        <h5 class="media-heading">信件标签：{{ v.get_tag() }}</h5>
 
                     </div>
                 </div>
