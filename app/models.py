@@ -79,6 +79,7 @@ class Letter(db.Model):
             16: '违规接受礼品礼金宴请服务',
             17: '违规发放津贴奖金',
             18: '在投票和选举中搞非组织活动',
+            19: '未分类'
         }
         tags = [pattern[x] if x in pattern else x for x in number]
         tags = "，".join('%s' % ed for ed in tags)

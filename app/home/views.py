@@ -219,10 +219,18 @@ def search():
 @home.route('/uploade', methods=['GET', 'POST'])
 def upload_e():
     if request.method == 'POST':
-        ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-        MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB
-        f = request.files['file']
+        # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+        # MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB
+
+        try:
+
+            f = request.files['file']
+        except Exception as e:
+            if e:
+                flash("请选择文件", "err")
+                return redirect(url_for("home.welcome"))
         filename = secure_filename(f.filename)
+
         f.save('./excel/' + filename)
         workbook = xlrd.open_workbook('./excel/' + filename)
         table = workbook.sheet_names()
@@ -249,7 +257,13 @@ def upload_p():
         UPLOAD_FOLDER = '/path/save'
         ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
         MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB
-        f = request.files['file']
+        try:
+            f = request.files['file']
+        except Exception as e:
+            if e:
+                flash("请选择文件", "err")
+                return redirect(url_for("home.welcome"))
+        filename = secure_filename(f.filename)
         f.save(secure_filename(f.filename))
 
         # 定义常量
@@ -335,9 +349,9 @@ def tag():
     if "user" not in session:
         return abort(404)
     key = request.args.get('key')
-    count = LetterTag.query.filter(LetterTag.label_id==key).count()
-    page_data=[]
-    letterTag = LetterTag.query.filter(LetterTag.label_id==key)
+    count = LetterTag.query.filter(LetterTag.label_id == key).count()
+    page_data = []
+    letterTag = LetterTag.query.filter(LetterTag.label_id == key)
     qq=[]
     for t in letterTag:
         qq.append(t.letter)
