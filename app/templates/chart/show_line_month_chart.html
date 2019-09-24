@@ -1,0 +1,84 @@
+{% extends "home/home.html" %}
+
+{% block username %}
+    {{ name }}
+{% endblock %}
+{% block content %}
+
+<style type="text/css">
+
+	.menu
+	{
+		font-size: 0;
+		padding: 0;
+		height: 50px;
+		position: relative;
+	}
+	.menubar
+	{
+		margin: 0 auto;
+		position: absolute;
+		list-style-type: none;
+		width: 100%;
+		overflow-y: auto;
+	}
+
+	.menubar li
+	{
+		padding:0px 5px;
+		display:inline-block;
+		cursor: pointer;
+		line-height: 50px;
+	}
+	.menubar li:hover
+	{
+	    background-color:#F5F5F5;
+	}
+	.menubar li.menu-value
+	{
+        outline-color: #0c0c0c;
+	}
+
+	.menubar a
+	{
+		display: block;
+		height: 50px;
+		font-family: "微软雅黑","Microsoft Yahei","Hiragino Sans GB",tahoma,arial,"宋体" ;
+		font-size: 15px;
+		text-align: center;
+		text-decoration: none;
+		color: #0095bb;
+	}
+
+</style>
+
+
+<div class="menu">
+	<ul class="menubar">
+		<li class="menu-value" ><a href="">山西省各项问题占比</a></li>
+		<li class="" ><a href="">山西信访数量趋势图</a></li>
+	</ul>
+</div>
+<div>
+
+<div>
+<div id="pie" style="width:1000px; height:600px;"></div>
+    <script>
+        $(
+            function () {
+                var chart = echarts.init(document.getElementById('pie'), 'white', {renderer: 'canvas'});
+                $.ajax({
+                    type: "GET",
+                    url: "http://127.0.0.1:5000/getreapieChart",
+                    dataType: 'json',
+                    success: function (result) {
+                        chart.setOption(result);
+                    }
+                });
+            }
+        )
+    </script>
+    </div>
+</div>
+
+{% endblock %}

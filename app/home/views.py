@@ -7,11 +7,17 @@ import sys
 import xlrd
 from aip import AipOcr
 from flask import render_template, redirect, flash, url_for, session, request, abort
+from pyecharts.charts import Pie
 from werkzeug import secure_filename
 from werkzeug.security import generate_password_hash
 
+
+from app.letter_method.DButil import get_all_keywords,write_judgement,get_label_count,get_no_judgement,get_area_proportion
+from app.letter_method.word_method import spilt_word,relation_word_count,result_judegement,label_int_to_str
+from app.chart.chart_make import get_line, get_month_line, get_place_pie
+
 from app.home.forms import LoginForm, RegisterForm, UserdetailForm, PwdForm, TagForm
-from app.models import User, db, Letter, LetterTag
+from app.models import User, db, Letter, LetterTag, Closedword, Keyword
 from . import home
 
 '''
@@ -20,11 +26,11 @@ views是主要的路由文件
 
 # @ home = Blueprint("home",__name__)
 
+
 # 根路由
 @home.route("/")
 def index():
     page_data = []
-
     return render_template("home/index.html", page_data=page_data)
 
 
@@ -219,18 +225,10 @@ def search():
 @home.route('/uploade', methods=['GET', 'POST'])
 def upload_e():
     if request.method == 'POST':
-        # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-        # MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB
-
-        try:
-
-            f = request.files['file']
-        except Exception as e:
-            if e:
-                flash("请选择文件", "err")
-                return redirect(url_for("home.welcome"))
+        ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+        MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB
+        f = request.files['file']
         filename = secure_filename(f.filename)
-
         f.save('./excel/' + filename)
         workbook = xlrd.open_workbook('./excel/' + filename)
         table = workbook.sheet_names()
@@ -245,9 +243,37 @@ def upload_e():
                 )
                 db.session.add(letter)
                 db.session.commit()
+        #信件判定
+        label_keywords = get_all_keywords()
+        letters = get_no_judgement()
+        for l in letters:
+            letter_id = l[0]
+            data = []
+            data.append(l[1])
+            seg = spilt_word(data)
+            last_results = []
+            for l_keywords in label_keywords:
+                origin_results = []
+                for kwoc in l_keywords[1]:
+                    o_result = relation_word_count(seg[0], kwoc)
+                    if o_result:
+                        origin_results.append(o_result)
+                if len(origin_results) != 0:
+                    last_result = result_judegement(origin_results)
+                    last_results.append([l_keywords[0], last_result])
+
+            if len(last_results) != 0:
+                for last_result in last_results:
+                    label_id = last_result[0]
+                    basis = ""
+                    for bas in last_result[1][1]:
+                        basis = basis + bas + "|"
+                    write_judgement(letter_id, label_id, basis)
+            else:
+                write_judgement(letter_id, 19, "")
         flash("信访信息文档上传成功", "acc")
         return redirect(url_for("home.welcome"))
-    return "err"
+    return abort(500)
 
 
 # 上传信访信件照片
@@ -358,3 +384,61 @@ def tag():
     for i in qq:
         page_data += Letter.query.filter(Letter.letter_id == i)
     return render_template("home/tagbar.html", name=session.get('user'),page_data=page_data,count=count,key=key)
+
+
+# 图表展示
+@home.route('/piechart')
+def piechart():
+    return render_template("chart/piechart_chart.html", name=session.get('user'))
+
+
+# 图表展示
+@home.route('/chart')
+def chart():
+    return render_template("chart/show_chart.html", name=session.get('user'))
+
+
+#
+@home.route('/lineChart')
+def line_chart():
+    return render_template("chart/show_line_month_chart.html")
+
+
+#
+@home.route("/getlabelpieChart")
+def get_pie_chart():
+    l_num_counts = get_label_count()
+    label_counts = []
+    for l_c in l_num_counts:
+        label = label_int_to_str(l_c[0])
+        counts = l_c[1]
+        label_counts.append((label, counts))
+    pie = Pie()
+    pie.add("", label_counts, center=["67%", "50%"], radius=["0%", "75%"])
+    pie.set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}"))
+    pie.set_global_opts(
+        title_opts=opts.TitleOpts(title="官员问题类别占比"),
+        legend_opts=opts.LegendOpts(
+            orient="vertical", pos_top="7%", pos_left="2%",
+        ),
+    )
+    return pie.dump_options_with_quotes()
+
+
+@home.route("/getlineChart")
+def get_line_chart():
+    line = get_line()
+    return line.dump_options_with_quotes()
+
+
+@home.route("/getmonthlineChart")
+def get_month_line_chart():
+    line = get_month_line(9)
+    return line.dump_options_with_quotes()
+
+
+# 地区占比图
+@home.route("/getareapieChart")
+def get_area_pie_chart():
+    pie = get_place_pie()
+    return pie.dump_options_with_quotes()

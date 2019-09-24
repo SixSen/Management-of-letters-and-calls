@@ -111,6 +111,17 @@ class Admin(db.Model):
     admin_pwd = db.Column(db.String(100), nullable=False)  # 管理员密码
 
 
+class Keyword(db.Model):
+    __tablename__ = 'keyword'
+    label_id = db.Column(db.Integer,primary_key=True,nullable=False)  # 问题标签ID
+    keyword = db.Column(db.String(100),primary_key=True,nullable=False) # 关键词
+
+
+class Closedword(db.Model):
+    __tablename__ = 'closedword'
+    behalf_word = db.Column(db.String(100),primary_key=True,nullable=False) # 相近词代表
+    closedword = db.Column(db.String(100)) # 相近词
+
 if __name__ == "__main__":
     db.drop_all()
     db.create_all()
