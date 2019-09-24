@@ -6,16 +6,7 @@
 
 {% block content %}
 <br>
-        <div>
-        <div class="btn-group btn-group-lg" style="margin-bottom: 20px">
-            <a id="m1" href="{{ url_for('home.tag',key=1) }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-envelope"></span>&nbsp;查看信件
-            </a>
-             <a id="m2" href="{{ url_for('home.piechart') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-signal"></span>&nbsp;查看图表
-            </a>
-        </div>
-    </div>
+    {% include "home/bar.html" %}
 
     <h2>问题类型</h2>
     <style>

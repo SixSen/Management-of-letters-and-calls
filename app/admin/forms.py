@@ -49,11 +49,45 @@ class LoginForm(FlaskForm):
             raise ValidationError("账号不存在! ")
 
 
+class CloseForm(FlaskForm):
+    """
+    关键词表单
+    """
+    behalf_word = StringField(
+        label="原有相关词",
+        validators=[
+            DataRequired("不可为空")
+        ],
+        description="关键词",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "关键词",
+            # 注释此处显示forms报错errors信息
+            # "required": "required"
+        }
+    )
+    closedword = StringField(
+        label="替换相关词",
+        validators=[
+            DataRequired("不可为空")
+        ],
+        description="替换词",
+        render_kw={
+            "class": "form-control",
+            "placeholder": "替换词",
+            # 注释此处显示forms报错errors信息
+            # "required": "required"
+        }
+    )
+    submit = SubmitField(
+        '提交',
+        render_kw={
+            "class": "btn btn-primary btn-block btn-flat",
+        }
+    )
 
-# class AuthorForm(FlaskForm):
-#     author = StringField('歌手：', validators=[DataRequired()])
-#     music = StringField('歌曲：', validators=[DataRequired()])
-#     style = StringField('风格：', validators=[DataRequired()])
-#     free = StringField('免费：', validators=[DataRequired()])
-#     address = StringField('地址：', validators=[DataRequired()])
-#     submit = SubmitField('添加歌曲')
+    def validate_account(self, field):
+        account = field.data
+        admin = Admin.query.filter_by(admin_id=account).count()
+        if admin == 0:
+            raise ValidationError("账号不存在! ")

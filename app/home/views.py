@@ -1,9 +1,4 @@
-import datetime
-
-import jieba
-# from app import db, app, rd
 import pymysql
-import sys
 import xlrd
 from aip import AipOcr
 from flask import render_template, redirect, flash, url_for, session, request, abort
@@ -17,7 +12,7 @@ from app.letter_method.word_method import spilt_word,relation_word_count,result_
 from app.chart.chart_make import get_line, get_month_line, get_place_pie
 
 from app.home.forms import LoginForm, RegisterForm, UserdetailForm, PwdForm, TagForm
-from app.models import User, db, Letter, LetterTag, Closedword, Keyword
+from app.models import User, db, Letter, LetterTag
 from . import home
 
 '''
@@ -37,8 +32,8 @@ def index():
 # 欢迎主页
 @home.route("/welcome/")
 def welcome():
-    # if "user" not in session:
-    #     return abort(404)
+    if "user" not in session:
+        return abort(404)
     name = session.get('user')
     print(session.get('user'))
     return render_template("home/welcome.html", name=session.get('user'))
@@ -148,24 +143,12 @@ def pwd():
     return render_template("home/pwd.html", name=session.get('user'), form=form)
 
 
-# 个人中心——订阅会员
+# 个人中心——生成报告
 @home.route("/sub/", methods=["GET", "POST"])
 def sub():
     if "user" not in session:
         return abort(404)
-    form = PwdForm()
-    if form.validate_on_submit():
-        data = form.data
-        user2 = User.query.filter_by(name=session["user"]).first()
-        if not user2.check_pwd(data["old_pwd"]):
-            flash("旧密码错误！", "err")
-            return redirect(url_for('home.pwd'))
-        user2.pwd = generate_password_hash(data["new_pwd"])
-        db.session.add(user2)
-        db.session.commit()
-        flash("修改密码成功，请重新登录！", "ok")
-        return redirect(url_for('home.logout'))
-    return render_template("home/subscribe.html", name=session.get('user'), form=form)
+    return render_template("home/subscribe.html", name=session.get('user'))
 
 
 # 管理中心——生成报告
@@ -334,6 +317,8 @@ def upload_p():
 # 查看信件原文
 @home.route('/msg', methods=['GET', 'POST'])
 def msg():
+    if "user" not in session:
+        return abort(404)
     if request.method == 'POST':
         key = request.args.get('id')
         req = request.get_data("media", as_text=True)

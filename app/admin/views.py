@@ -4,16 +4,7 @@ from flask import Blueprint, render_template, redirect, flash, url_for, session,
 from . import admin
 from app.models import User, db, Admin, Keyword, Closedword
 from flask import render_template, redirect, url_for, flash, session, request
-from app.admin.forms import LoginForm
-
-# @admin.route("/", methods=["GET", "POST"])
-# def index():
-#     """
-#     后台登录
-#     """
-#
-#     return "<h1>Hello World!</h1>"
-#
+from app.admin.forms import LoginForm, CloseForm
 
 
 # 路由定义使用装饰器进行定义
@@ -111,26 +102,6 @@ def upuser():
     return redirect(url_for('admin.all'))
 
 
-#
-# # 删除歌曲
-# @admin.route('/delete_music/<music_id>')
-# def delete_music(music_id):
-#     music = Music.query.get(music_id)
-#     musicna = music.music_name
-#     if music:
-#         try:
-#             db.session.delete(music)
-#             db.session.commit()
-#         except Exception as e:
-#             print(e)
-#             flash('删除歌曲失败')
-#             db.session.rollback()
-#     else:
-#         flash('歌曲找不到')
-#     flash("删除成功歌曲%s" % musicna)
-#     return redirect(url_for('admin.manage'))
-
-
 @admin.route('/manage/', methods=['GET', 'POST'])
 def manage():
     return "默认用户名：admin , 密码：admin"
@@ -172,3 +143,26 @@ def add():
     return render_template("admin/add.html", id=session.get("admin_id"))
 
 
+@admin.route('/close/', methods=['GET', 'POST'])
+def close():
+    form = CloseForm()
+    if form.validate_on_submit():
+        data = form.data
+        behalf = Closedword.query.filter_by(behalf_word=data["behalf_word"]).first()
+        if behalf:
+            c = behalf.closedword
+            c = c + "|" + data["closedword"]
+            behalf.closedword = c
+            db.session.add(behalf)
+            db.session.commit()
+            flash("成功添加相关词！", "acc")
+            return redirect(url_for('admin.close'))
+        cl = Closedword(
+            closedword=data["closedword"],
+            behalf_word=data["behalf_word"]
+        )
+        db.session.add(cl)
+        db.session.commit()
+        flash("成功添加相关词！", "acc")
+        return redirect(url_for('admin.close'))
+    return render_template("admin/closeword.html", id=session.get("admin_id"), form=form)

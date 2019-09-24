@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e14a238-dbe0-4d12-b0d4-df3f3a7d889d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/templates/admin/add.html" afterDir="false" />
+    <list default="true" id="9e14a238-dbe0-4d12-b0d4-df3f3a7d889d" name="Default Changelist" comment="后台优化">
+      <change afterPath="$PROJECT_DIR$/app/templates/admin/closeword.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/home/bar.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/admin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/chart/chart_make.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/chart/chart_make.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/home/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/home/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/letter_method/DButil.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/letter_method/DButil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/admin/all.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/all.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/add.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/menu.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/chart/piechart_chart.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chart/piechart_chart.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/chart/show_chart.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chart/show_chart.html" afterDir="false" />
@@ -24,17 +24,16 @@
     <SUITE FILE_PATH="coverage/tata$tata.coverage" NAME="tata Coverage Results" MODIFIED="1568278696725" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Management_of_letters_and_calls$maragement.coverage" NAME="maragement Coverage Results" MODIFIED="1568794056279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Management_of_letters_and_calls$tata.coverage" NAME="tata Coverage Results" MODIFIED="1568280270202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Management_of_letters_and_calls$manage.coverage" NAME="manage Coverage Results" MODIFIED="1569307976094" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Management_of_letters_and_calls$manage.coverage" NAME="manage Coverage Results" MODIFIED="1569316359066" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/home/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="357" column="31" lean-forward="true" selection-start-line="356" selection-start-column="12" selection-end-line="357" selection-end-column="31" />
+            <state>
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#1#15#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -43,38 +42,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/chart/piechart_chart.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="77" column="44" lean-forward="true" selection-start-line="77" selection-start-column="44" selection-end-line="77" selection-end-column="44" />
+            <state relative-caret-position="42">
+              <caret line="71" column="33" selection-start-line="71" selection-start-column="33" selection-end-line="71" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/letter_method/word_method.py">
+        <entry file="file://$PROJECT_DIR$/app/templates/chart/show_chart.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="24" column="18" lean-forward="true" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
-              <folding>
-                <element signature="e#17#28#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="113">
+              <caret line="71" column="33" selection-start-line="71" selection-start-column="33" selection-end-line="71" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/letter_method/DButil.py">
+        <entry file="file://$PROJECT_DIR$/app/templates/admin/add.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="166" column="18" lean-forward="true" selection-start-line="162" selection-start-column="4" selection-end-line="168" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/home/tagbar.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="16" column="14" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="16" selection-end-column="14" />
+            <state relative-caret-position="315">
+              <caret line="51" column="32" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -82,8 +69,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/admin/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="160" column="65" selection-start-line="160" selection-start-column="65" selection-end-line="160" selection-end-column="65" />
+            <state relative-caret-position="-3072">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
               <folding>
                 <element signature="e#18#30#0" expanded="true" />
               </folding>
@@ -91,32 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/templates/admin/add.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="50" column="67" selection-start-line="50" selection-start-column="67" selection-end-line="50" selection-end-column="67" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/admin/home.html">
+        <entry file="file://$PROJECT_DIR$/app/templates/admin/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1144">
-              <caret line="100" column="14" selection-start-line="100" selection-start-column="14" selection-end-line="100" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/admin/all.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="35" />
+            <state relative-caret-position="410">
+              <caret line="68" column="15" lean-forward="true" selection-start-line="38" selection-start-column="7" selection-end-line="68" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -124,8 +90,39 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/admin/menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="2" column="50" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="50" />
+            <state relative-caret-position="126">
+              <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+              <folding>
+                <element signature="e#570#576#0#HTML" expanded="true" />
+                <element signature="e#596#602#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/admin/closeword.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="945">
+              <caret line="45" column="51" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/admin/forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="113">
+              <caret line="69" column="19" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/home/tagbar.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="8" selection-start-line="8" selection-end-line="8" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -158,7 +155,6 @@
         <option value="$PROJECT_DIR$/app/templates/home/menu.html" />
         <option value="$PROJECT_DIR$/app/__init__.py" />
         <option value="$PROJECT_DIR$/app/templates/home/index.html" />
-        <option value="$PROJECT_DIR$/app/admin/forms.py" />
         <option value="$PROJECT_DIR$/app/templates/home/subscribe.html" />
         <option value="$PROJECT_DIR$/app/templates/admin/login.html" />
         <option value="$PROJECT_DIR$/app/templates/home/login.html" />
@@ -171,23 +167,26 @@
         <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/app/letter_method/word_method.py" />
         <option value="$PROJECT_DIR$/app/templates/chart/show_line_month_chart.html" />
-        <option value="$PROJECT_DIR$/app/templates/chart/piechart_chart.html" />
-        <option value="$PROJECT_DIR$/app/templates/chart/show_chart.html" />
-        <option value="$PROJECT_DIR$/app/templates/home/tagbar.html" />
         <option value="$PROJECT_DIR$/app/chart/chart_make.py" />
         <option value="$PROJECT_DIR$/app/letter_method/DButil.py" />
-        <option value="$PROJECT_DIR$/app/home/views.py" />
         <option value="$PROJECT_DIR$/app/templates/home/msg.html" />
-        <option value="$PROJECT_DIR$/app/admin/views.py" />
         <option value="$PROJECT_DIR$/app/templates/admin/all.html" />
+        <option value="$PROJECT_DIR$/app/templates/home/bar.html" />
+        <option value="$PROJECT_DIR$/app/templates/home/tagbar.html" />
+        <option value="$PROJECT_DIR$/app/templates/chart/piechart_chart.html" />
+        <option value="$PROJECT_DIR$/app/templates/chart/show_chart.html" />
         <option value="$PROJECT_DIR$/app/templates/admin/menu.html" />
+        <option value="$PROJECT_DIR$/app/templates/admin/closeword.html" />
         <option value="$PROJECT_DIR$/app/templates/admin/add.html" />
+        <option value="$PROJECT_DIR$/app/admin/forms.py" />
+        <option value="$PROJECT_DIR$/app/admin/views.py" />
+        <option value="$PROJECT_DIR$/app/home/views.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="842" />
-    <option name="y" value="162" />
+    <option name="y" value="-9" />
     <option name="width" value="980" />
     <option name="height" value="1050" />
   </component>
@@ -251,6 +250,13 @@
               <item name="Management-of-letters-and-calls" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="chart" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Management-of-letters-and-calls" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Management-of-letters-and-calls" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="home" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -273,16 +279,16 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\tata\app" />
+      <recent name="D:\tata" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\ GitHub\Management-of-letters-and-calls\app\templates\home" />
       <recent name="D:\ GitHub\Management-of-letters-and-calls\app\templates" />
       <recent name="D:\ GitHub\Management-of-letters-and-calls\app" />
       <recent name="D:\ GitHub\Management-of-letters-and-calls" />
       <recent name="D:\tata\app\templates\home" />
-      <recent name="D:\tata\app" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\tata\app" />
-      <recent name="D:\tata" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -331,7 +337,8 @@
       <workItem from="1568790607838" duration="3694000" />
       <workItem from="1568940394887" duration="4001000" />
       <workItem from="1569287795515" duration="4891000" />
-      <workItem from="1569295606249" duration="6515000" />
+      <workItem from="1569295606249" duration="6625000" />
+      <workItem from="1569313709163" duration="2843000" />
     </task>
     <task id="LOCAL-00001" summary="完善">
       <created>1568791069088</created>
@@ -361,31 +368,38 @@
       <option name="project" value="LOCAL" />
       <updated>1569296579993</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="增加图表">
+      <created>1569313097860</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1569313097860</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63986000" />
+    <option name="totallyTimeSpent" value="66939000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.40616623" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.41152814" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info anchor="bottom" id="Docker" order="1" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="2" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.32914925" />
-      <window_info anchor="bottom" id="Run" order="4" sideWeight="0.49463806" visible="true" weight="0.33240223" />
+      <window_info active="true" anchor="bottom" id="Run" order="4" sideWeight="0.4899464" visible="true" weight="0.33240223" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32960895" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.32775453" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5053619" side_tool="true" visible="true" weight="0.33240223" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.51005363" side_tool="true" visible="true" weight="0.33240223" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.325419" />
       <window_info anchor="right" id="SciView" order="0" />
       <window_info anchor="right" id="Database" order="1" />
@@ -414,16 +428,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="增加图表" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/static/404/404.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lib/site-packages/flask_sqlalchemy/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-415">
-          <caret line="799" selection-start-line="799" selection-end-line="799" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/manage.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -468,21 +472,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/home/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="13" column="12" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/templates/ui/s_page.html" />
-    <entry file="file://$PROJECT_DIR$/app/admin/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="53" column="27" selection-start-line="52" selection-start-column="2" selection-end-line="58" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/home/fav.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/home/rb.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/home/wallet.html" />
@@ -539,13 +529,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/admin/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/home/search.html">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -588,13 +571,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/chart/show_chart.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="91" column="57" lean-forward="true" selection-start-line="91" selection-start-column="57" selection-end-line="91" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/home/welcome.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
@@ -619,68 +595,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/home/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="357" column="31" lean-forward="true" selection-start-line="356" selection-start-column="12" selection-end-line="357" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/chart/piechart_chart.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="77" column="44" lean-forward="true" selection-start-line="77" selection-start-column="44" selection-end-line="77" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/letter_method/word_method.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="24" column="18" lean-forward="true" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
+        <state relative-caret-position="462">
+          <caret line="24" column="18" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
           <folding>
             <element signature="e#17#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/letter_method/DButil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="166" column="18" lean-forward="true" selection-start-line="162" selection-start-column="4" selection-end-line="168" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/admin/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="160" column="65" selection-start-line="160" selection-start-column="65" selection-end-line="160" selection-end-column="65" />
-          <folding>
-            <element signature="e#18#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/home/tagbar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="16" column="14" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="16" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/admin/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1144">
+        <state relative-caret-position="2100">
           <caret line="100" column="14" selection-start-line="100" selection-start-column="14" selection-end-line="100" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/admin/menu.html">
+    <entry file="file://$PROJECT_DIR$/app/letter_method/DButil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="50" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="50" />
+        <state relative-caret-position="168">
+          <caret line="166" column="18" selection-start-line="162" selection-start-column="4" selection-end-line="168" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/home/bar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -691,12 +633,88 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/chart/show_chart.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="71" column="33" selection-start-line="71" selection-start-column="33" selection-end-line="71" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/chart/piechart_chart.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="71" column="33" selection-start-line="71" selection-start-column="33" selection-end-line="71" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/admin/menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding>
+            <element signature="e#570#576#0#HTML" expanded="true" />
+            <element signature="e#596#602#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/home/tagbar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" selection-start-line="8" selection-end-line="8" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/admin/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="68" column="15" lean-forward="true" selection-start-line="38" selection-start-column="7" selection-end-line="68" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/home/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3646">
+          <caret line="8" column="20" lean-forward="true" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/admin/add.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="50" column="67" selection-start-line="50" selection-start-column="67" selection-end-line="50" selection-end-column="67" />
+        <state relative-caret-position="315">
+          <caret line="51" column="32" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/admin/closeword.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="45" column="51" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/admin/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="69" column="19" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/admin/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3072">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="e#18#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/home/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#1#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
