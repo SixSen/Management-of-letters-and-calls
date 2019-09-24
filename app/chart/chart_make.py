@@ -20,7 +20,7 @@ def get_line():
     dates = cursor.fetchall()
     for date in dates:
         s = date[0].strftime("%Y-%m-%d %H-%M-%S")
-        moon = int(s[5:7])
+        moon = int(s[5:7]) - 1
         date_count[moon] += date[1]
     conn.close()
     line = (
@@ -48,7 +48,7 @@ def get_month_line(moon):
     dates = cursor.fetchall()
     for date in dates:
         s = date[0].strftime("%Y-%m-%d %H-%M-%S")
-        day = int(s[8:10])
+        day = int(s[8:10]) - 1
         date_count[day] += date[1]
     conn.close()
     line = (

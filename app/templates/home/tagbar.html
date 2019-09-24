@@ -11,7 +11,7 @@
             <a id="m1" href="{{ url_for('home.tag',key=1) }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-envelope"></span>&nbsp;查看信件
             </a>
-             <a id="m2" href="{{ url_for('home.chart') }}" class="btn btn-default">
+             <a id="m2" href="{{ url_for('home.piechart') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-signal"></span>&nbsp;查看图表
             </a>
         </div>
@@ -23,8 +23,12 @@
         #taglist li {
             display: inline-block;
         }
+    li.active {
+    background-color: #f8f8f8;
+    border-right-width: 0px;
+}
     </style>
-    <ul id="taglist" class="nav nav-tabs" style="display: inline-block;">
+    <ul id="taglist" class="nav nav-pills" style="display: inline-block;">
         <li><a href="{{ url_for('home.tag',key=1) }}">不正当性关系</a></li>
         <li><a href="{{ url_for('home.tag',key=2) }}">贪污贿赂行为</a></li>
         <li><a href="{{ url_for('home.tag',key=3) }}">侵害群众利益</a></li>

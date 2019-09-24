@@ -1,7 +1,8 @@
 # 从模块的初始化文件中导入蓝图。
+import jieba
 from flask import Blueprint, render_template, redirect, flash, url_for, session, request, Response, abort
 from . import admin
-from app.models import User, db, Admin
+from app.models import User, db, Admin, Keyword, Closedword
 from flask import render_template, redirect, url_for, flash, session, request
 from app.admin.forms import LoginForm
 
@@ -133,3 +134,41 @@ def upuser():
 @admin.route('/manage/', methods=['GET', 'POST'])
 def manage():
     return "默认用户名：admin , 密码：admin"
+
+
+@admin.route('/add/', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        key = request.args.get('id')
+        req = request.get_data("media", as_text=True)
+        keyword = request.values.get("keyword")
+
+        # req = req.replace("&media=", " ")
+        req = req.replace("&keyword="+'*', " ")
+
+        key = req[req.rfind("&media=")+1:req.rfind("&")]
+        key = key.replace("media=", "")
+        if key == 'keyword':
+            flash("添加失败，请完整输入", "err")
+            return redirect(url_for('admin.add', id=key))
+        pokw = jieba.cut(keyword)
+        kw = ""
+        for p in pokw:
+            if kw == "":
+                kw = p
+            else:
+                kw = kw + "+" + p
+        count = Keyword.query.filter(Keyword.keyword == kw).count()
+        if count:
+            flash("添加失败，关键词已经存在！", "err")
+            return redirect(url_for('admin.add', id=key))
+        new_key = Keyword(
+            label_id=key,
+            keyword=kw
+        )
+        db.session.add(new_key)
+        db.session.commit()
+        flash("添加关键词成功", "acc")
+    return render_template("admin/add.html", id=session.get("admin_id"))
+
+

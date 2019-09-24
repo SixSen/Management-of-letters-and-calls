@@ -171,7 +171,7 @@ def write_new_keyword(label_id, keyword):
     try:
         cursor.execute(sql)
         db.commit()
-        print("insert keyword successfully")
+        # print("insert keyword successfully")
         return True
     except Exception as e:
         print(e)

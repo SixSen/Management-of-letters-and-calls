@@ -358,7 +358,6 @@ def msg():
             db.session.commit()
         flash("标签修改成功", "acc")
         return redirect(url_for('home.msg', id=key))
-
     form = TagForm()
     key = request.args.get('id')
     tag = LetterTag.query.filter(LetterTag.letter == key)
