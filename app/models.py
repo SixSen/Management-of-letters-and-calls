@@ -55,6 +55,17 @@ class Letter(db.Model):
     accuseArea = db.Column(db.String(100), nullable=True)  # 被举报地区
     accuseDepartment = db.Column(db.String(100), nullable=True)  # 被举报部门
 
+    def get_basis(self):
+        let = LetterTag.query.filter(LetterTag.letter == self.letter_id)
+        basis = []
+        for i in let:
+            if not i.basis:
+                return False
+            else:
+                basis.append("标签关键句："+i.basis)
+        basis = '-------|'.join(' %s ' % ed for ed in basis)
+        return basis
+
     def get_tag(self):
         tag = LetterTag.query.filter(LetterTag.letter == self.letter_id)
         number = []
@@ -85,13 +96,12 @@ class Letter(db.Model):
         tags = "，".join('%s' % ed for ed in tags)
         return tags
 
-
     def get_letter(self):
         tags = LetterTag.query.filter(LetterTag.label_id == 18)
         letters=[]
         for l in tags:
             letters.append(l.letter)
-        print(letters)
+        # print(letters)
         # letters = Letter.query.filter(Letter.letter_id == tags.letter)
         return letters
 

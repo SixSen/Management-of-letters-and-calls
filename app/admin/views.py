@@ -35,7 +35,7 @@ def logout():
 @admin.route("/all/")
 def all():
     if not "admin_id" in session:
-        return abort(403)
+        return abort(404)
     form = User.query.all()
     # print(form)
     admin_id = session.get("admin_id")
@@ -109,6 +109,8 @@ def manage():
 
 @admin.route('/add/', methods=['GET', 'POST'])
 def add():
+    if not "admin_id" in session:
+        return abort(404)
     if request.method == 'POST':
         key = request.args.get('id')
         req = request.get_data("media", as_text=True)
@@ -145,12 +147,17 @@ def add():
 
 @admin.route('/close/', methods=['GET', 'POST'])
 def close():
+    if not "admin_id" in session:
+        return abort(404)
     form = CloseForm()
     if form.validate_on_submit():
         data = form.data
         behalf = Closedword.query.filter_by(behalf_word=data["behalf_word"]).first()
         if behalf:
             c = behalf.closedword
+            if data["closedword"] in c:
+                flash("关键词已经存在！", "err")
+                return redirect(url_for('admin.close'))
             c = c + "|" + data["closedword"]
             behalf.closedword = c
             db.session.add(behalf)

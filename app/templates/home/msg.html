@@ -28,7 +28,15 @@
         <h4> 举报地点：{{ id.accuseArea }}</h4>
         标签：{{ id.get_tag() }}
         <hr>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ id.contect }}
+        <div style="font-size:120%">
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ id.contect }}
+        </div>
+        <hr>
+        {% if id.get_basis() %}
+            <h6 style="margin-top:50px; color: #0d6aad">参考：<br>&nbsp&nbsp&nbsp{{ id.get_basis() }}</h6>
+        
+        {% endif %}
+
     </div>
 
 
