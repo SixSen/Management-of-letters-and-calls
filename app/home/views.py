@@ -1,14 +1,17 @@
+import datetime
+
 import pymysql
 import xlrd
+from pyecharts import options as opts
 from aip import AipOcr
 from flask import render_template, redirect, flash, url_for, session, request, abort
 from pyecharts.charts import Pie
 from werkzeug import secure_filename
 from werkzeug.security import generate_password_hash
 
-
-from app.letter_method.DButil import get_all_keywords,write_judgement,get_label_count,get_no_judgement,get_area_proportion
-from app.letter_method.word_method import spilt_word,relation_word_count,result_judegement,label_int_to_str
+from app.letter_method.DButil import get_all_keywords, write_judgement, get_label_count, get_no_judgement, \
+    get_area_proportion
+from app.letter_method.word_method import spilt_word, relation_word_count, result_judegement, label_int_to_str
 from app.chart.chart_make import get_line, get_month_line, get_place_pie
 
 from app.home.forms import LoginForm, RegisterForm, UserdetailForm, PwdForm, TagForm
@@ -18,6 +21,7 @@ from . import home
 '''
 views是主要的路由文件
 '''
+
 
 # @ home = Blueprint("home",__name__)
 
@@ -152,11 +156,69 @@ def sub():
 
 
 # 管理中心——生成报告
-@home.route("/getsub/")
+@home.route("/getsub")
 def getsub():
     if "user" not in session:
         return abort(404)
-    return "正在生成报告"
+    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='1232123', db='xinfang')
+    cursor = conn.cursor()
+    sql = "SELECT COUNT(letter_id) FROM letter;"
+    cursor.execute(sql)
+    page_data = []
+    time = datetime.datetime.now()
+    y = time.strftime("%Y")
+    m = time.strftime("%m")
+    d = time.strftime("%d")
+    page_data.append(y)
+    page_data.append(m)
+    page_data.append(d)
+    total = cursor.fetchall()
+    page_data.append(total[0][0])  # 1
+    sql = "SELECT area FROM " \
+          "( SELECT area,COUNT(letter_id) as amount " \
+          "FROM ( SELECT LEFT(accuseArea,6) as area,letter_id FROM letter ) " \
+          "a GROUP BY area )  " \
+          "b ORDER BY amount desc LIMIT 3"
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    area = [0] * 4
+    n = 0
+    for r in result:
+        area[n] = r[0]
+        n += 1
+    sql = "SELECT area FROM " \
+          "( SELECT area,COUNT(letter_id) as amount " \
+          "FROM ( SELECT LEFT(accuseArea,6) as area,letter_id FROM letter ) " \
+          "a GROUP BY area )  " \
+          "b ORDER BY amount LIMIT 1"
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    area[3] = result[0][0]
+
+    label = [0] * 4
+    sql = "SELECT label_id,COUNT(letter) AS amount " \
+          "FROM tag GROUP BY label_id ORDER BY amount DESC LIMIT 3"
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    n = 0
+    for r in result:
+        label[n] = label_int_to_str(r[0])
+        n += 1
+    sql = "SELECT label_id,COUNT(letter) AS amount " \
+          "FROM tag GROUP BY label_id ORDER BY amount LIMIT 1"
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    label[3] = label_int_to_str(result[0])
+
+    moon = [0] * 4
+    sql = "SELECT month,COUNT(*) AS count " \
+          "FROM ( SELECT DATE_FORMAT(date, '%m') month FROM letter ) a " \
+          "GROUP BY month ORDER BY count DESC limit 1"
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    moon = int(result[0][0])
+    return render_template("home/report.html", data=page_data,
+                           area=area, label=label, moon=moon)
 
 
 # 注册
@@ -201,7 +263,8 @@ def search():
     )
     page_data.key = key
 
-    return render_template("home/search.html", name=session.get('user'), key=key, count=count, page_data=page_data, form= form)
+    return render_template("home/search.html", name=session.get('user'), key=key, count=count, page_data=page_data,
+                           form=form)
 
 
 # 上传Excel文档
@@ -226,7 +289,7 @@ def upload_e():
                 )
                 db.session.add(letter)
                 db.session.commit()
-        #信件判定
+        # 信件判定
         label_keywords = get_all_keywords()
         letters = get_no_judgement()
         for l in letters:
@@ -306,8 +369,33 @@ def upload_p():
         )
         db.session.add(letter)
         db.session.commit()
-        # seg_list = jieba.cut(line, cut_all=True)
-        # print("分词结果: " + "  ".join(seg_list))  # 全模式
+
+        label_keywords = get_all_keywords()
+        letters = get_no_judgement()
+        for l in letters:
+            letter_id = l[0]
+            data = []
+            data.append(l[1])
+            seg = spilt_word(data)
+            last_results = []
+            for l_keywords in label_keywords:
+                origin_results = []
+                for kwoc in l_keywords[1]:
+                    o_result = relation_word_count(seg[0], kwoc)
+                    if o_result:
+                        origin_results.append(o_result)
+                if len(origin_results) != 0:
+                    last_result = result_judegement(origin_results)
+                    last_results.append([l_keywords[0], last_result])
+            if len(last_results) != 0:
+                for last_result in last_results:
+                    label_id = last_result[0]
+                    basis = ""
+                    for bas in last_result[1][1]:
+                        basis = basis + bas + "|"
+                    write_judgement(letter_id, label_id, basis)
+            else:
+                write_judgement(letter_id, 19, "")
         flash("信访文档照片上传成功", "acc")
         return redirect(url_for("home.welcome"))
     flash("信访文档照片上传失败", "err")
@@ -362,12 +450,12 @@ def tag():
     count = LetterTag.query.filter(LetterTag.label_id == key).count()
     page_data = []
     letterTag = LetterTag.query.filter(LetterTag.label_id == key)
-    qq=[]
+    qq = []
     for t in letterTag:
         qq.append(t.letter)
     for i in qq:
         page_data += Letter.query.filter(Letter.letter_id == i)
-    return render_template("home/tagbar.html", name=session.get('user'),page_data=page_data,count=count,key=key)
+    return render_template("home/tagbar.html", name=session.get('user'), page_data=page_data, count=count, key=key)
 
 
 # 图表展示
@@ -382,10 +470,16 @@ def chart():
     return render_template("chart/show_chart.html", name=session.get('user'))
 
 
-#
 @home.route('/lineChart')
 def line_chart():
-    return render_template("chart/show_line_month_chart.html")
+    return render_template("chart/show_line_chart.html", name=session.get('user'))
+
+
+# 折线图形展示（月-日）
+@home.route('/monthlineChart')
+def month_line_chart():
+    key = request.args.get('moon')
+    return render_template("chart/show_line_month_chart.html", moon=key, name=session.get('user'))
 
 
 #
@@ -415,9 +509,13 @@ def get_line_chart():
     return line.dump_options_with_quotes()
 
 
-@home.route("/getmonthlineChart")
+@home.route("/getmonthlineChart/")
 def get_month_line_chart():
-    line = get_month_line(9)
+    moon = request.args.get('moon')
+    # print("+++++++++++++++++++++++++++++++++++++++++")
+    # print(moon)
+    moon = int(moon)
+    line = get_month_line(moon)
     return line.dump_options_with_quotes()
 
 

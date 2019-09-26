@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:margin-top="http://www.w3.org/1999/xhtml" xmlns:word-break="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='base/images/logo.png') }}">
+    <title>信访情况报告</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='base/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='base/css/bootstrap-movie.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='base/css/animate.css') }}">
+
+
+    <script src="{{ url_for('static', filename='echarts.min.js') }}"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+    <script src="{{ url_for('static',filename='base/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='base/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='base/js/jquery.singlePageNav.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='base/js/wow.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='lazyload/jquery.lazyload.min.js') }}"></script>
+
+    <script language="javascript">
+        {#打印固定地方#}
+
+        function preview(oper) {
+            if (oper < 10) {
+                a = document.getElementById("areapie")
+                bdhtml = window.document.body.innerHTML;//获取当前页的html代码
+                sprnstr = "<!--startprint" + oper + "-->";//设置打印开始区域
+                eprnstr = "<!--endprint" + oper + "-->";//设置打印结束区域
+                prnhtml = bdhtml.substring(bdhtml.indexOf(sprnstr) + 18); //从开始代码向后取html
+                prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));//从结束代码向前取html
+                window.document.body.innerHTML = prnhtml;
+                window.print();
+                window.document.body.innerHTML = bdhtml;
+            } else {
+                window.print();
+            }
+        }
+    </script>
+    {#echarts接受并转化成图形#}
+    <script>
+        $(
+            function () {
+                var chart = echarts.init(document.getElementById('areapie'), 'white', {renderer: 'canvas'});
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:5000/getareapieChart",
+                    dataType: 'json',
+                    success: function (result) {
+                        chart.setOption(result);
+                        chart.on('finished', function () {
+                            var areaimg = document.getElementById("areaimg")
+                            areaimg.src = chart.getDataURL();
+                            chart.hide()
+                        });
+                    }
+                });
+            }
+        )
+        $(
+            function () {
+                var chart = echarts.init(document.getElementById('labelpie'), 'white', {renderer: 'canvas'});
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:5000/getlabelpieChart",
+                    dataType: 'json',
+                    success: function (result) {
+                        chart.setOption(result);
+                        chart.on('finished', function () {
+                            var labelimg = document.getElementById("labelimg")
+                            labelimg.src = chart.getDataURL();
+                            chart.hide()
+                        });
+                    }
+                });
+            }
+        )
+        $(
+            function () {
+                var chart = echarts.init(document.getElementById('line'), 'white', {renderer: 'canvas'});
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:5000/getlineChart",
+                    dataType: 'json',
+                    success: function (result) {
+                        chart.setOption(result);
+                        chart.on('finished', function () {
+                            var lineimg = document.getElementById("lineimg")
+                            lineimg.src = chart.getDataURL();
+                            chart.hide()
+                        });
+                    }
+                });
+            }
+        )
+    </script>
+
+
+    <style>
+        .navbar-brand > img {
+            display: inline;
+        }
+
+    </style>
+    <style>
+        .media {
+            padding: 3px;
+            border: 1px solid #ccc
+        }
+    </style>
+    <style type="text/css">
+        p {
+            text-indent: 1cm
+        }
+    </style>
+    　
+</head>
+<body>
+
+
+<!--startprint1-->
+<img src="{{ url_for('static',filename='base/images/logo.png') }}" style="height:30px;" alt="logo">
+
+{#总起#}
+<div style="left:35px;position:absolute;top:50px;font-size:17px;word-break:normal; ">
+    <p>截止到{{ data[0] }}年{{ data[1] }}月{{ data[2] }}日，今年我省信访报告来访有{{ data[3] }}件。</p>
+</div>
+
+
+{#地区占比图canvas#}
+<div id="areapie" style="width:1000px; height:600px;position:absolute;top:100px;left:35px"></div>
+{#地区占比图img#}
+<div style="width:1000px; height:600px;position:absolute;top:100px;left:35px">
+    <img src="" id="areaimg"/>
+</div>
+{#地区占比图的分析#}
+<div style="left:35px;top:650px;position:absolute;font-size:17px; width:1000px; word-break:break-all;">
+    <p>
+        由地区占比分析可知{{ area[0] }}在调查期间内信访数量占比最多，
+        {% if area[1] == 0 %}
+        {% elif area[2] == 0 %}
+            {{ area[1] }}紧随其后
+        {% else %}
+            {{ area[1] }}、{{ area[2] }}紧随其后
+        {% endif %}
+        {% if area[3] == None %}
+        {% else %}
+            {{ area[3] }}
+        {% endif %}
+        在信访普查中占比数量较少。 由此可见，{{ area[0] }}是问题多发区，群众通过信访反映问题次数居多，
+        该地政府需要应当引起重视，认真听取人民群众的反馈，从中了解人民群众的需求，着手解决人民群众反映的问题，
+        同时还需要加强和改进人民信访工作。{{ area[4] }}市信访数量较少，人民群众对于政府工作可能较为满意，但是依然不能放松对于人民信访工作。
+    </p>
+</div>
+
+
+{#问题占比图#}
+<div id="labelpie" style="width:1000px; height:600px;position:absolute;top:770px;left:35px"></div>
+{#问题占比图img#}
+<div style="width:1000px; height:600px;position:absolute;top:770px;left:35px">
+    <img src="" id="labelimg"/>
+</div>
+{#问题占比图的分析#}
+<div style="left:35px;top:1320px;position:absolute;font-size:17px; width:1000px; word-break:break-all;">
+    <p>
+        在官员问题类别占比图中，发现{{ label[0] }}的问题最为严重，
+        {% if label[1] == 0 %}
+        {% elif data[2] == 0 %}
+            其次是{{ label[1] }}
+        {% else %}
+            其次是{{ label[1] }}、{{ label[2] }}
+        {% endif %}
+        由此可见，在官员产生的问题中{{ label[0] }}是百姓最为关心的问题，对于官员自身问题改进中，
+        我省官员应该着重改进自身存在的这类问题，政府对于官员的纪律监察要以占比最多的前三项作为重心进行重点调查，
+        山西省的纪律检查工作仍然需要长期奋斗。
+    </p>
+</div>
+
+
+{#数量趋势图#}
+<div id="line" style="width:1000px; height:600px;position:absolute;top:1440px;left:35px"></div>
+{#数量趋势图img#}
+<div style="width:1000px; height:600px;position:absolute;top:1440px;left:35px">
+    <img src="" id="lineimg"/>
+</div>
+{#数量趋势图的分析#}
+<div style="left:35px;top:2200px;position:absolute;font-size:17px; width:1000px; word-break:break-all;">
+    <p>
+        由信访数量趋势图分析可知，其中以{{ moon }}月尤为明显,在信访高峰期，
+        应该投入更多人力对信访来信进行分析，应该投入更多人力对信访来信进行分析，了解官员问题发生的主客观原因并给予打击治理。
+    </p>
+</div>
+
+
+<!--endprint1-->
+
+{#打印按钮#}
+<div style="left:500px;top:10px;position:absolute;">
+    <input type='button' name='button_export' title='打印' onclick=preview(1) value="---报告打印---">
+</div>
+
+</body>
+</html>

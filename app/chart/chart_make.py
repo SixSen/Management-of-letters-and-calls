@@ -32,6 +32,7 @@ def get_line():
     return line
 
 
+# 折线图（月-日）
 def get_month_line(moon):
     days = calendar.monthrange(2016, moon)[1]
     date_list = range(1, (days + 1))
@@ -48,20 +49,22 @@ def get_month_line(moon):
     dates = cursor.fetchall()
     for date in dates:
         s = date[0].strftime("%Y-%m-%d %H-%M-%S")
-        day = int(s[8:10]) - 1
-        date_count[day] += date[1]
+        # print(s)
+        the_moon = int(s[5:7])
+        if the_moon == moon:
+            day = int(s[8:10]) - 1
+            date_count[day] += date[1]
     conn.close()
     line = (
         Line()
             .add_xaxis(date_list)
             .add_yaxis("", date_count)
-            .set_global_opts(title_opts=opts.TitleOpts(title=str(moon) + "信访数量趋势图"))
+            .set_global_opts(title_opts=opts.TitleOpts(title=str(moon) + "月信访数量趋势图"))
     )
     return line
 
 
 def get_place_pie():
-
     sql = "SELECT area,COUNT(letter_id) " \
           "FROM (SELECT LEFT(accuseArea,6) as area,letter_id FROM letter) b GROUP BY area"
     conn = pymysql.connect(host='127.0.0.1',
